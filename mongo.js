@@ -9,8 +9,15 @@ MongoClient.connect("mongodb://"+settings.host+"/"+settings.db, function(err, db
 	    {name: "fkoji", score: 80},
 	    {name: "dotinstall", score: 60}
 	];
-	coll.insert(docs, function(err, result) {
-	    console.dir(result);
+//	coll.find({name: "taguchi"}).toArray(function(err, items) {
+//	    console.log(items);
+//	});
+	var stream = coll.find().stream();
+	stream.on("data", function(item) {
+	    console.log(item);
+	});
+	stream.on("end", function () {
+	    console.log("finished");
 	});
     });
 });
